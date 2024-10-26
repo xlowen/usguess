@@ -15,12 +15,6 @@ dict_data = data.to_dict()
 my_turtle = turtle.Turtle()
 correct_guesses = []
 
-print(data["state"])
-print(data.state.str.lower())
-
-for state in data.state.str.lower():
-    print(state)
-
 while len(correct_guesses) < 50:
     answer_state = screen.textinput(title=f"Corretos: {len(correct_guesses)}/50", prompt="Digite um estado.").lower()
     if answer_state == "sair":
@@ -38,18 +32,11 @@ while len(correct_guesses) < 50:
 
 
 all_states = data["state"].str.lower().to_list()
-missing_states = []
 
-for state in all_states:
-    if state in correct_guesses:
-        continue
-    else:
-        print(f"adicionando: {state} na lista.")
-        missing_states.append(state)
+missing_states = [state for state in all_states if state not in correct_guesses] # added list comprehension
 
 
 print("missing states: ", missing_states)
 missing_states = pandas.DataFrame(missing_states)
 
 missing_states.to_csv("estados_faltando.csv")
-# states_to_learn.csv
